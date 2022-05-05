@@ -1,0 +1,32 @@
+Set Up an App Password in Gmail
+To use the EMAIL_HOST_PASSWORD setting you’ll need to activate the less secure app access and have an app password from your personal email address.
+
+If you don’t activate the less secure app access, you’ll probably get a SMTPAuthenticationError, because Django has no way to comply with Google security protocols.
+
+You may opt to use your normal password, but it would be even more risky than using an app password. My advice is to create a new Gmail account or to use a “testing” email address.
+
+Taking this into account, you can get a Gmail app password with the steps below. Note that if you’re using an existing account and have enabled 2-step verification, you can skip steps 2 and 3:
+
+Create or Login into a Gmail account
+Go to myaccount.google.com/lesssecureapps and turn on the less secure apps option.
+Less secure apps
+Enable two-factor authentication, as it’s required to get an app password.
+2-factor-verification
+Now you have two-factor authentication enabled, it’s time to get an app password. You can do this by going to the security section of your google account, scrolling down to the Signing in to Google section, and clicking on App passwords.
+App password
+You’ll need to re-prompt your password (account password), before being redirected to the App passwords page.
+
+Once you’re in, click on select app, where you’ll choose a custom name for that app password — such as “Django Send Email” — then click on GENERATE.
+
+App password generation
+
+A new window will show up with a sixteen-character password. Copy it, because we’ll need it to configure our Django project.
+
+Generated app password
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_app_password'
+EMAIL_PORT = 587
